@@ -279,7 +279,7 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 	}
 	
 	
-	/**********************  Métodos responsáveis por desenhar na tela: *********************/
+	/*********************************************  Métodos responsáveis por desenhar na tela: *****************************************/
 	
 	public void mostrarPontos(Graphics g) {
 		
