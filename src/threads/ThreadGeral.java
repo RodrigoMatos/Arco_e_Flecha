@@ -15,6 +15,8 @@ public class ThreadGeral extends Thread {
 	public void run() {
 		while(!jogo.isFim()){
 			verificarFim();
+			// Solicitar coleta de lixo.
+			System.gc();
 			try {
 				Thread.sleep(ConfiguracaoThread.tempoThreadGeral);
 			} catch (InterruptedException e) {
@@ -25,8 +27,19 @@ public class ThreadGeral extends Thread {
 	
 	private void verificarFim(){
 		
+		boolean fim = true;
 		if(jogo.getCenario().getQtdBaloesCaindo() >= jogo.getCenario().getQtdBaloes() || jogo.getCenario().getFlechasAtiradas() >= jogo.getCenario().getQtdFlecha()) {
-			//jogo.setFim(true);
+			loop1:
+				for(int i=0; i<jogo.getCenario().getQtdFlecha();i++){
+					if(jogo.getCenario().getFlechas()[i] != null){
+						fim = false;
+						break loop1;
+					}
+				}
+			if(fim){
+				System.out.println("Fim do jogo!!!");
+				jogo.setFim(true);
+			}
 		}
 	}
 	

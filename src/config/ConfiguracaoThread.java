@@ -2,10 +2,10 @@ package config;
 
 public class ConfiguracaoThread {
 
-	public static Long tempoThreadMoverBalao = 100L;
-	public static Long tempoThreadMoverFlecha = 100L;
-	public static Long tempoThreadVerificarBalao = 200L;
-	public static Long tempoThreadGeral = 200L;
-	public static Long tempoThreadDesenho = 100L;
+	public static Long tempoThreadMoverBalao = 150L;
+	public static Long tempoThreadMoverFlecha = 150L;
+	public static Long tempoThreadVerificarBalao = 500L;
+	public static Long tempoThreadGeral = 1000L;
+	public static Long tempoThreadDesenho = 150L;
 	
 }
