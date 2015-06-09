@@ -33,6 +33,14 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 	int velocidadeSubindo = 3;
 	int velocidadeDescendo = 5;
 	int areaInicialBalao = 120;// Posição X que os balões não irão ultrapassar na tela
+		Long tempoGif = 600L;
+		Image imgBalao = null;
+		Image ImgBalaoFurado = null;
+		Image ImgBalaoBoom = null;
+		Point[] baloesBoom;
+		Long[] tempoInicial;
+		Long[] tempoFinal;
+	
 
 	// Dados flechas
 	Point flechas[];
@@ -41,10 +49,6 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 	int flechasAtiradas = 0;
 	int velocidadeFlecha = 5;
 
-	// Imagens
-	Image imgBalao = null;
-	Image ImgBalaoFurado = null;
-	
 	// Posições iniciais de objetos
 	int posXPontos = 0;
 	int posXSeta = 0;
@@ -55,11 +59,16 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 		resize(width, heigth);
 		baloes = new Point[qtdBaloes];
 		baloesCaindo = new Point[qtdBaloes];
+		baloesBoom = new Point[qtdBaloes];
+		tempoInicial = new Long[qtdBaloes];
+		tempoFinal = new Long[qtdBaloes];
 		flechas = new Point[qtdFlecha];
 		seta = new Point(0, 0);
 		pontos = 0;
 		imgBalao = getImage(getCodeBase(), "jogo/balao.png");
 		ImgBalaoFurado = getImage(getCodeBase(), "jogo/balaoFurado.png");
+		ImgBalaoBoom = getImage(getCodeBase(), "jogo/boom.gif");;
+		
 		criarBaloes();
 	}
 
@@ -82,6 +91,7 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 			moverFlechas();
 			verificarBaloes();
 			verificarFim();
+			verificarBaloesBoom();
 			repaint();
 			try {
 				Thread.sleep(100);
@@ -113,6 +123,12 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 		for (int i = 0; i < qtdBaloesCaindo; i++) {
 			if (baloesCaindo[i] != null) {
 				desenharBalaoFurado(g, baloesCaindo[i].x, baloesCaindo[i].y, larguraBalao, alturaBalao);
+			}
+		}
+		
+		for (int i = 0; i < qtdBaloesCaindo; i++) {
+			if (baloesBoom[i] != null) {
+				desenharBalaoBoom(g, baloesBoom[i].x, baloesBoom[i].y, larguraBalao, alturaBalao);
 			}
 		}
 		
@@ -176,11 +192,24 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 								&& (flechas[i].y >= baloes[j].y && flechas[i].y <= baloes[j].y + alturaBalao)) {
 							System.out.println("Acertou");
 							baloesCaindo[qtdBaloesCaindo] = baloes[j];
+							baloesBoom[qtdBaloesCaindo] = baloes[j];
+							//tempoInicial[qtdBaloesCaindo] = System.currentTimeMillis();
+							tempoFinal[qtdBaloesCaindo] = System.currentTimeMillis() + tempoGif;
 							baloes[j] = null;
 							pontos++;
 							qtdBaloesCaindo++;
 						}
 					}
+				}
+			}
+		}
+	}
+	
+	public void verificarBaloesBoom() {
+		for(int i = 0; i<qtdBaloesCaindo; i++){
+			if(baloesBoom[i] != null){
+				if(tempoFinal[i]<=System.currentTimeMillis()){
+					baloesBoom[i] = null;
 				}
 			}
 		}
@@ -281,12 +310,14 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 
 	public void desenharBalao(Graphics g, int x1, int y1, int largura, int altura) {
 		g.drawImage(imgBalao, x1, y1, this);
-		// g.drawOval(x1, y1, largura, altura);//Desenha um circulo oval.
 	}
 	
 	public void desenharBalaoFurado(Graphics g, int x1, int y1, int largura, int altura) {
 		g.drawImage(ImgBalaoFurado, x1, y1, this);
-		// g.drawOval(x1, y1, largura, altura);//Desenha um circulo oval.
+	}
+	
+	public void desenharBalaoBoom(Graphics g, int x1, int y1, int largura, int altura) {
+		g.drawImage(ImgBalaoBoom, x1, y1, largura, altura, this);
 	}
 
 	public void desenharFlecha(Graphics g, int x, int y) {
