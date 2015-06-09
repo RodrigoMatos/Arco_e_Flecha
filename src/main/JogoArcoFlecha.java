@@ -5,9 +5,10 @@ import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Point;
 
-import objetos.Cenario;
-import objetos.Desenho;
-import objetos.Flecha;
+import classes.Cenario;
+import classes.Desenho;
+import classes.Flecha;
+
 import threads.ThreadDesenho;
 import threads.ThreadGeral;
 import threads.ThreadMoverBalao;
