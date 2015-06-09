@@ -1,7 +1,10 @@
 package jogo;
 
-import java.applet.*;
-import java.awt.*;
+import java.applet.Applet;
+import java.awt.Event;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
 import java.util.Random;
 
 public class JogoArcoFlecha extends Applet implements Runnable {
@@ -10,14 +13,16 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 
 	private volatile Thread mainThread = null;
 	
-	
-	int pontos;
+	int pontos = 0;
 	boolean fim = false;
-	
 	
 	// dados cenario
 	int width = 400;
 	int heigth = 300;
+	
+	// Posições iniciais de objetos
+	int posXPontos = 0;
+	int posXSeta = 0;
 
 	// Dados do arqueiro
 	Point seta;
@@ -32,14 +37,13 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 	int qtdBaloesCaindo = 0;
 	int velocidadeSubindo = 3;
 	int velocidadeDescendo = 5;
-	int areaInicialBalao = 120;// Posição X que os balões não irão ultrapassar na tela
+	int areaInicialBalao = 160;// Posição X que os balões não irão ultrapassar na tela
 		Long tempoGif = 600L;
 		Image imgBalao = null;
 		Image ImgBalaoFurado = null;
 		Image ImgBalaoBoom = null;
 		Point[] baloesBoom;
-		Long[] tempoInicial;
-		Long[] tempoFinal;
+		Long[] tempoFinalGif;
 	
 
 	// Dados flechas
@@ -49,27 +53,21 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 	int flechasAtiradas = 0;
 	int velocidadeFlecha = 5;
 
-	// Posições iniciais de objetos
-	int posXPontos = 0;
-	int posXSeta = 0;
-	
-
 	public void init() {
 		
 		resize(width, heigth);
 		baloes = new Point[qtdBaloes];
 		baloesCaindo = new Point[qtdBaloes];
 		baloesBoom = new Point[qtdBaloes];
-		tempoInicial = new Long[qtdBaloes];
-		tempoFinal = new Long[qtdBaloes];
+		tempoFinalGif = new Long[qtdBaloes];
 		flechas = new Point[qtdFlecha];
 		seta = new Point(0, 0);
-		pontos = 0;
+		
+		criarBaloes();
+		
 		imgBalao = getImage(getCodeBase(), "jogo/balao.png");
 		ImgBalaoFurado = getImage(getCodeBase(), "jogo/balaoFurado.png");
 		ImgBalaoBoom = getImage(getCodeBase(), "jogo/boom.gif");;
-		
-		criarBaloes();
 	}
 
 	@Override
@@ -106,47 +104,32 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 	}
 
 	
-	//Metodo que desenha na tela
+	// Método que desenha na tela
 	@Override
 	public void paint(Graphics g) {
 		
-		//Desenhar balões subindo
-		for (int i = 0; i < qtdBaloes; i++) {
-			if (baloes[i] != null) {
-				if (baloes[i].y < -alturaBalao) {
-					baloes[i].y = heigth - 1;
-				}
-				desenharBalao(g, baloes[i].x, baloes[i].y, larguraBalao, alturaBalao);
-			}
-		}
-		//Desenhar balões caindo
-		for (int i = 0; i < qtdBaloesCaindo; i++) {
-			if (baloesCaindo[i] != null) {
-				desenharBalaoFurado(g, baloesCaindo[i].x, baloesCaindo[i].y, larguraBalao, alturaBalao);
-			}
-		}
+		// Desenhar balões subindo
+		desenharBalao(g);
 		
-		for (int i = 0; i < qtdBaloesCaindo; i++) {
-			if (baloesBoom[i] != null) {
-				desenharBalaoBoom(g, baloesBoom[i].x, baloesBoom[i].y, larguraBalao, alturaBalao);
-			}
-		}
+		// Desenhar balões caindo
+		desenharBalaoFurado(g);
 		
-		//Desenhar flechas
-		for (int i = 0; i < flechasAtiradas; i++) {
-			if (flechas[i] != null) {
-				desenharFlecha(g, flechas[i].x, flechas[i].y);
-			}
-		}
-		//Desenhar seta
+		// Desenhar balões explodindo
+		desenharBalaoBoom(g);
+		
+		// Desenhar flechas
+		desenharFlecha(g);
+		
+		// Desenhar seta
 		desenharSeta(g);
-		//Exibit pontuação atual
+		
+		// Exibir pontuação atual
 		mostrarPontos(g);
 	}
 
 	public void criarBaloes() {
 
-		//Criar balões em posições aleatorias.
+		// Criar balões em posições aleatorias.
 		Random num = new Random();
 		int criados = 0;
 		int x, y;
@@ -156,7 +139,7 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 			x = num.nextInt(width);
 			y = num.nextInt(heigth);
 
-			// diminuir a probabilidade de que um balão fique em cima de outro:
+			// Diminuir a probabilidade de que um balão fique em cima de outro:
 			if (x > areaInicialBalao && x < width - larguraBalao) {
 				if (criados == 0) {
 					baloes[criados] = new Point(x, y);
@@ -182,7 +165,7 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 
 	public void verificarBaloes() {
 		
-		//Verifica se a alguma flecha atingiu algum balão
+		// Verifica se a alguma flecha atingiu algum balão
 		for (int i = 0; i < flechasAtiradas; i++) {
 			if (flechas[i] != null) {
 				for (int j = 0; j < qtdBaloes; j++) {
@@ -193,8 +176,7 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 							System.out.println("Acertou");
 							baloesCaindo[qtdBaloesCaindo] = baloes[j];
 							baloesBoom[qtdBaloesCaindo] = baloes[j];
-							//tempoInicial[qtdBaloesCaindo] = System.currentTimeMillis();
-							tempoFinal[qtdBaloesCaindo] = System.currentTimeMillis() + tempoGif;
+							tempoFinalGif[qtdBaloesCaindo] = System.currentTimeMillis() + tempoGif;
 							baloes[j] = null;
 							pontos++;
 							qtdBaloesCaindo++;
@@ -206,9 +188,11 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 	}
 	
 	public void verificarBaloesBoom() {
+		
+		// Verificar se existem balões estourando e se passou o tempo da explosão
 		for(int i = 0; i<qtdBaloesCaindo; i++){
 			if(baloesBoom[i] != null){
-				if(tempoFinal[i]<=System.currentTimeMillis()){
+				if(tempoFinalGif[i]<=System.currentTimeMillis()){
 					baloesBoom[i] = null;
 				}
 			}
@@ -251,13 +235,13 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 			if (baloes[i] != null) {
 				// Faz o balão subir
 				baloes[i] = new Point(baloes[i].x, baloes[i].y - velocidadeSubindo);
-				// flag random para saber se o balão vai para a direita ou esquerda.
+				// Flag random para saber se o balão vai para a direita ou esquerda.
 				boolean moverDireita = new Random().nextBoolean();
 				if(moverDireita && baloes[i].x < width-larguraBalao){
 					// Faz o balão ir para a direita
 					baloes[i] = new Point(baloes[i].x+velocidadeSubindo-1, baloes[i].y);
 				} else if(baloes[i].x > areaInicialBalao) {
-					//Faz o balão ir para esquerda
+					// Faz o balão ir para esquerda
 					baloes[i] = new Point(baloes[i].x-velocidadeSubindo-1, baloes[i].y);
 				}
 			}
@@ -266,14 +250,14 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 	
 	public void moverBaloesCaindo() {
 
-		//Movimenta os balões.
+		// Movimenta os balões.
 		for (int i = 0; i < qtdBaloesCaindo; i++) {
 			if (baloesCaindo[i] != null) {
 				if(baloesCaindo[i].y <= heigth - alturaBalao){
-					//Se não chegou no fim continuar movendo
+					// Se não chegou no fim continuar movendo
 					baloesCaindo[i] = new Point(baloesCaindo[i].x, baloesCaindo[i].y + velocidadeDescendo);
 				} else {
-					//Se chegar no fim do cenario, deve-se remover o balão.
+					// Se chegar no fim do cenario, deve-se remover o balão.
 					baloesCaindo[i] = null;
 				}
 			}
@@ -282,7 +266,7 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 
 	public void moverFlechas() {
 
-		//Movimenta as flechas.
+		// Movimenta as flechas.
 		for (int i = 0; i < flechasAtiradas; i++) {
 			if (flechas[i] != null) {
 				if (flechas[i].x < width) {
@@ -298,34 +282,63 @@ public class JogoArcoFlecha extends Applet implements Runnable {
 	/**********************  Métodos responsáveis por desenhar na tela: *********************/
 	
 	public void mostrarPontos(Graphics g) {
+		
+		// Exibir pontuação atual do jogador
 		g.drawString("Pontos: " + pontos, posXPontos, heigth);
 	}
 	
 	public void desenharSeta(Graphics g) {
-		//Desenha uma seta (no lugar do arqueiro).
+		
+		// Desenha uma seta (no lugar do arqueiro).
 		g.drawLine(seta.x, seta.y, seta.x + larguraSeta, seta.y);
 		g.drawLine(seta.x + larguraSeta - 5, seta.y - 5, seta.x + larguraSeta, seta.y);
 		g.drawLine(seta.x + larguraSeta - 5, seta.y + 5, seta.x + larguraSeta, seta.y);
 	}
 
-	public void desenharBalao(Graphics g, int x1, int y1, int largura, int altura) {
-		g.drawImage(imgBalao, x1, y1, this);
+	public void desenharBalao(Graphics g) {
+		
+		// Desenhar balões
+		for (int i = 0; i < qtdBaloes; i++) {
+			if (baloes[i] != null) {
+				if (baloes[i].y < -alturaBalao) {
+					baloes[i].y = heigth - 1;
+				}
+				g.drawImage(imgBalao, baloes[i].x, baloes[i].y, larguraBalao, alturaBalao, this);
+			}
+		}
 	}
 	
-	public void desenharBalaoFurado(Graphics g, int x1, int y1, int largura, int altura) {
-		g.drawImage(ImgBalaoFurado, x1, y1, this);
+	public void desenharBalaoFurado(Graphics g) {
+		
+		// Desenhar balões furados
+		for (int i = 0; i < qtdBaloesCaindo; i++) {
+			if (baloesCaindo[i] != null) {
+				g.drawImage(ImgBalaoFurado, baloesCaindo[i].x, baloesCaindo[i].y, larguraBalao, alturaBalao, this);
+			}
+		}
 	}
 	
-	public void desenharBalaoBoom(Graphics g, int x1, int y1, int largura, int altura) {
-		g.drawImage(ImgBalaoBoom, x1, y1, largura, altura, this);
+	public void desenharBalaoBoom(Graphics g) {
+
+		// Desenhar explosão
+		for (int i = 0; i < qtdBaloesCaindo; i++) {
+			if (baloesBoom[i] != null) {
+				g.drawImage(ImgBalaoBoom, baloesBoom[i].x, baloesBoom[i].y, larguraBalao, alturaBalao, this);
+			}
+		}
+		
 	}
 
-	public void desenharFlecha(Graphics g, int x, int y) {
+	public void desenharFlecha(Graphics g) {
 
-		//Desenha uma flecha.
-		g.drawLine(x, y, x + larguraFlecha, y);
-		g.drawLine(x + larguraFlecha - 3, y - 3, x + larguraFlecha, y);
-		g.drawLine(x + larguraFlecha - 3, y + 3, x + larguraFlecha, y);
+		// Desenha flechas.
+		for (int i = 0; i < flechasAtiradas; i++) {
+			if (flechas[i] != null) {
+				g.drawLine(flechas[i].x, flechas[i].y, flechas[i].x + larguraFlecha, flechas[i].y);
+				g.drawLine(flechas[i].x + larguraFlecha - 3, flechas[i].y - 3, flechas[i].x + larguraFlecha, flechas[i].y);
+				g.drawLine(flechas[i].x + larguraFlecha - 3, flechas[i].y + 3, flechas[i].x + larguraFlecha, flechas[i].y);
+			}
+		}
 	}
 
 }
