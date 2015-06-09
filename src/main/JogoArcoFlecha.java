@@ -18,29 +18,19 @@ public class JogoArcoFlecha extends Applet {
 
 	private static final long serialVersionUID = -9075169431413415047L;
 
-	/************ Threads ************/
+	/************************ Threads **************************/
 	ThreadMoverBalao threadMoverBalao = new ThreadMoverBalao(this);
 	ThreadVerificarBalao threadVerificarBalao = new ThreadVerificarBalao(this);
 	ThreadGeral threadGeral = new ThreadGeral(this);
 	ThreadDesenho threadDesenho = new ThreadDesenho(this);
 	ThreadMoverFlechas threadMoverFlecha = new ThreadMoverFlechas(this);
 	
-	/****** Tempos entre as execuções das Threads *********/
-	private Long tempoThreadMoverBalao = 100L;
-	private Long tempoThreadMoverFlecha = 100L;
-	private Long tempoThreadVerificarBalao = 200L;
-	private Long tempoThreadGeral = 200L;
-	private Long tempoThreadDesenho = 100L;
-	
-	
+	/********* Dados Jogo *******/
 	private boolean fim = false;
-	
 	private Cenario cenario;
 	private Desenho desenhar;
 	
-	// Dados baloes
 	
-
 	
 	public void init() {
 		desenhar = new Desenho();
@@ -94,26 +84,6 @@ public class JogoArcoFlecha extends Applet {
 	
 	public boolean isFim(){
 		return this.fim;
-	}
-
-	public Long getTempoThreadMoverBalao() {
-		return tempoThreadMoverBalao;
-	}
-
-	public Long getTempoThreadVerificarBalao() {
-		return tempoThreadVerificarBalao;
-	}
-
-	public Long getTempoThreadGeral() {
-		return tempoThreadGeral;
-	}
-	
-	public Long getTempoThreadDesenho() {
-		return tempoThreadDesenho;
-	}
-	
-	public Long getTempoThreadMoverFlecha() {
-		return tempoThreadMoverFlecha;
 	}
 
 	public Cenario getCenario() {
