@@ -1,5 +1,6 @@
 package threads;
 
+import config.ConfiguracaoThread;
 import classes.Balao;
 import classes.Flecha;
 import main.JogoArcoFlecha;
@@ -18,7 +19,7 @@ public class ThreadVerificarBalao extends Thread {
 			this.verificarBaloes();
 			this.verificarBaloesBoom();
 			try {
-				Thread.sleep(this.jogo.getTempoThreadVerificarBalao());
+				Thread.sleep(ConfiguracaoThread.tempoThreadVerificarBalao);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

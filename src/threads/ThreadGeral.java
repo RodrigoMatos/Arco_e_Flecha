@@ -1,5 +1,6 @@
 package threads;
 
+import config.ConfiguracaoThread;
 import main.JogoArcoFlecha;
 
 public class ThreadGeral extends Thread {
@@ -15,7 +16,7 @@ public class ThreadGeral extends Thread {
 		while(!jogo.isFim()){
 			verificarFim();
 			try {
-				Thread.sleep(this.jogo.getTempoThreadGeral());
+				Thread.sleep(ConfiguracaoThread.tempoThreadGeral);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

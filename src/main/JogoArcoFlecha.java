@@ -124,5 +124,4 @@ public class JogoArcoFlecha extends Applet {
 		this.cenario = cenario;
 	}
 	
-	
 }

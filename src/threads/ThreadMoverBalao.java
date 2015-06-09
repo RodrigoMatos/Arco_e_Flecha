@@ -3,6 +3,8 @@ package threads;
 import java.awt.Point;
 import java.util.Random;
 
+import config.ConfiguracaoThread;
+
 import classes.Balao;
 
 import main.JogoArcoFlecha;
@@ -22,7 +24,7 @@ public class ThreadMoverBalao extends Thread {
 			this.moverBaloes();
 			this.moverBaloesCaindo();
 			try {
-				Thread.sleep(this.jogo.getTempoThreadMoverBalao());
+				Thread.sleep(ConfiguracaoThread.tempoThreadMoverBalao);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

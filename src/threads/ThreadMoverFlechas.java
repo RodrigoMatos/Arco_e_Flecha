@@ -2,6 +2,8 @@ package threads;
 
 import java.awt.Point;
 
+import config.ConfiguracaoThread;
+
 import classes.Flecha;
 
 import main.JogoArcoFlecha;
@@ -20,7 +22,7 @@ public class ThreadMoverFlechas extends Thread {
 		while(!jogo.isFim()){
 			moverFlechas();
 			try {
-				Thread.sleep(this.jogo.getTempoThreadMoverFlecha());
+				Thread.sleep(ConfiguracaoThread.tempoThreadMoverFlecha);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
