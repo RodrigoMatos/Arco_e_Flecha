@@ -5,15 +5,14 @@ import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Point;
 
-import classes.Cenario;
-import classes.Desenho;
-import classes.Flecha;
-
 import threads.ThreadDesenho;
 import threads.ThreadGeral;
 import threads.ThreadMoverBalao;
 import threads.ThreadMoverFlechas;
 import threads.ThreadVerificarBalao;
+import classes.Cenario;
+import classes.Desenho;
+import classes.Flecha;
 
 public class JogoArcoFlecha extends Applet {
 
