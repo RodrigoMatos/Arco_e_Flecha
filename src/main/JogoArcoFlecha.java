@@ -30,12 +30,14 @@ public class JogoArcoFlecha extends Applet {
 	private Cenario cenario;
 	private Desenho desenhar;
 	
-	
-	
 	public void init() {
+		novoJogo();
+		resize(cenario.getWidth(), cenario.getHeigth());
+	}
+	
+	public void novoJogo(){
 		desenhar = new Desenho();
 		cenario = new Cenario();
-		resize(cenario.getWidth(), cenario.getHeigth());
 
 		// Iniciar Threads
 		threadGeral.start();

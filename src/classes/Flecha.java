@@ -6,6 +6,7 @@ public class Flecha {
 
 	private Point posicao;
 	private static int larguraFlecha = 10;
+	private static int alturaFlecha = 10;
 	private static int velocidadeFlecha = 5;
 	
 	
@@ -32,8 +33,14 @@ public class Flecha {
 	public static int getVelocidadeFlecha() {
 		return velocidadeFlecha;
 	}
-	
-	
+
+	public static int getAlturaFlecha() {
+		return alturaFlecha;
+	}
+
+	public static void setAlturaFlecha(int alturaFlecha) {
+		Flecha.alturaFlecha = alturaFlecha;
+	}
 	
 	
 }
