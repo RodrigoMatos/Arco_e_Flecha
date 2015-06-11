@@ -3,10 +3,9 @@ package classes;
 import java.awt.Point;
 import java.util.Random;
 
+import config.Configuracao;
+
 public class Cenario {
-	
-	public static int width = 400;
-	public static int heigth = 300;
 	
 	private Balao[] baloes;
 	private Balao[] baloesCaindo;
@@ -36,22 +35,6 @@ public class Cenario {
 		baloesBoom = new Balao[qtdBaloes];
 		arqueiro = new Arqueiro();
 		criarBaloes();
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getHeigth() {
-		return heigth;
-	}
-
-	public void setHeigth(int heigth) {
-		this.heigth = heigth;
 	}
 
 	public int getPosXPontos() {
@@ -176,11 +159,11 @@ public class Cenario {
 		boolean criar = true;
 
 		while (criados < getQtdBaloes()) {
-			x = num.nextInt(getWidth());
-			y = num.nextInt(getHeigth());
+			x = num.nextInt(Configuracao.larguraCenario);
+			y = num.nextInt(Configuracao.alturaCenario);
 
 			// Diminuir a probabilidade de que um balão fique em cima de outro:
-			if (x > getAreaInicialBalao() && x < getWidth() - Balao.getLargura()) {
+			if (x > getAreaInicialBalao() && x < Configuracao.larguraCenario - Balao.getLargura()) {
 				if (criados == 0) {
 					getBaloes()[criados] = new Balao(new Point(x, y));
 					criados++;

@@ -3,7 +3,7 @@ package threads;
 import java.awt.Point;
 import java.util.Random;
 
-import config.ConfiguracaoThread;
+import config.Configuracao;
 
 import classes.Balao;
 
@@ -24,7 +24,7 @@ public class ThreadMoverBalao extends Thread {
 			this.moverBaloes();
 			this.moverBaloesCaindo();
 			try {
-				Thread.sleep(ConfiguracaoThread.tempoThreadMoverBalao);
+				Thread.sleep(Configuracao.tempoThreadMoverBalao);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -36,7 +36,7 @@ public class ThreadMoverBalao extends Thread {
 		// Movimenta os balões.
 		for (int i = 0; i < jogo.getCenario().getQtdBaloesCaindo(); i++) {
 			if (jogo.getCenario().getBaloesCaindo()[i] != null) {
-				if(jogo.getCenario().getBaloesCaindo()[i].getPosicao().y <= jogo.getCenario().getHeigth() - Balao.getAltura()){
+				if(jogo.getCenario().getBaloesCaindo()[i].getPosicao().y <= Configuracao.alturaCenario - Balao.getAltura()){
 					// Se não chegou no fim continuar movendo
 					jogo.getCenario().getBaloesCaindo()[i] = new Balao(new Point(jogo.getCenario().getBaloesCaindo()[i].getPosicao().x, jogo.getCenario().getBaloesCaindo()[i].getPosicao().y + Balao.getVelocidadeDescendo()));
 				} else {

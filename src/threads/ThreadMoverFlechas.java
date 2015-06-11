@@ -2,7 +2,7 @@ package threads;
 
 import main.JogoArcoFlecha;
 import classes.Flecha;
-import config.ConfiguracaoThread;
+import config.Configuracao;
 
 
 public class ThreadMoverFlechas extends Thread {
@@ -19,7 +19,7 @@ public class ThreadMoverFlechas extends Thread {
 		while(!jogo.isFim()){
 			moverFlechas();
 			try {
-				Thread.sleep(ConfiguracaoThread.tempoThreadMoverFlecha);
+				Thread.sleep(Configuracao.tempoThreadMoverFlecha);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -46,7 +46,7 @@ public class ThreadMoverFlechas extends Thread {
 		// Movimenta as flechas.
 		for (int i = 0; i < jogo.getCenario().getFlechasAtiradas(); i++) {
 			if (jogo.getCenario().getFlechas()[i] != null) {
-				if (jogo.getCenario().getFlechas()[i].getPosicao().x < jogo.getCenario().getWidth() && jogo.getCenario().getFlechas()[i].getPosicao().y < jogo.getCenario().getHeigth()) {
+				if (jogo.getCenario().getFlechas()[i].getPosicao().x < Configuracao.larguraCenario && jogo.getCenario().getFlechas()[i].getPosicao().y < Configuracao.alturaCenario) {
 				Flecha f = jogo.getCenario().getFlechas()[i];
 					f.setPosicao(f.getCaminho()[f.getIndice()]);
 					f.setIndice(f.getIndice()+1);

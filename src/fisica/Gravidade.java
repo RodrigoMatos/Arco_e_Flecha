@@ -2,8 +2,8 @@ package fisica;
 
 import java.awt.Point;
 
-import classes.Cenario;
 import classes.Flecha;
+import config.Configuracao;
 
 public class Gravidade {
 	
@@ -27,7 +27,7 @@ public class Gravidade {
 	}
 	
 	private void limpar(){
-		caminho = new Point[Cenario.width];
+		caminho = new Point[Configuracao.larguraCenario];
 		indice = 0;
 	}
 	
@@ -55,7 +55,7 @@ public class Gravidade {
 		cada posição(*)*/
 		int y = 0;
 		//for(t = 0; t <= tempo;t = (float) (t +0.25))
-		for(t = 0; y < Cenario.heigth;t = (float) (t +0.25)) 
+		for(t = 0; y < Configuracao.alturaCenario;t = (float) (t +0.25)) 
 		{
 			sx = (vx*t);
 			sy = ((vy * t) - (gravidade * t * t)/2);

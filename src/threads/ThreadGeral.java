@@ -1,6 +1,6 @@
 package threads;
 
-import config.ConfiguracaoThread;
+import config.Configuracao;
 import main.JogoArcoFlecha;
 
 public class ThreadGeral extends Thread {
@@ -18,7 +18,7 @@ public class ThreadGeral extends Thread {
 			// Solicitar coleta de lixo.
 			System.gc();
 			try {
-				Thread.sleep(ConfiguracaoThread.tempoThreadGeral);
+				Thread.sleep(Configuracao.tempoThreadGeral);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

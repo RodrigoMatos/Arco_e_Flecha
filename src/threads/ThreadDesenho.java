@@ -1,6 +1,6 @@
 package threads;
 
-import config.ConfiguracaoThread;
+import config.Configuracao;
 import main.JogoArcoFlecha;
 
 public class ThreadDesenho extends Thread {
@@ -16,7 +16,7 @@ public class ThreadDesenho extends Thread {
 		while(!jogo.isFim()){
 			jogo.repaint();
 			try {
-				Thread.sleep(ConfiguracaoThread.tempoThreadDesenho);
+				Thread.sleep(Configuracao.tempoThreadDesenho);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

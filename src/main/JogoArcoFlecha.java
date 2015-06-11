@@ -15,7 +15,7 @@ import threads.ThreadVerificarBalao;
 import classes.Cenario;
 import classes.Desenho;
 import classes.Flecha;
-import config.ConfiguracaoThread;
+import config.Configuracao;
 import fisica.Gravidade;
 
 public class JogoArcoFlecha extends Applet implements MouseMotionListener, MouseListener{
@@ -36,13 +36,13 @@ public class JogoArcoFlecha extends Applet implements MouseMotionListener, Mouse
 	private Gravidade gravidade;
 
 	private Long tempo;
-	private int velocidade = ConfiguracaoThread.velocidadeIncialFlecha;
+	private int velocidade = Configuracao.velocidadeIncialFlecha;
 	
 	public void init() {
 		addMouseMotionListener(this);
 		addMouseListener(this);
 		novoJogo();
-		resize(cenario.getWidth(), cenario.getHeigth());
+		resize(Configuracao.larguraCenario, Configuracao.alturaCenario);
 	}
 	
 	public void novoJogo(){
@@ -101,7 +101,7 @@ public class JogoArcoFlecha extends Applet implements MouseMotionListener, Mouse
 		if (cenario.getFlechasAtiradas() < cenario.getQtdFlecha()) {
 			Flecha f = new Flecha(new Point(cenario.getArqueiro().getPosicao().x + cenario.getArqueiro().getLargura(), cenario.getArqueiro().getPosicao().y));
 			f.setVelocidadeFlecha(velocidade);
-			velocidade = ConfiguracaoThread.velocidadeIncialFlecha;
+			velocidade = Configuracao.velocidadeIncialFlecha;
 			f.setCaminho(gravidade.getCaminhoFlecha(f));
 			gravidade = new Gravidade();
 			//cenario.getFlechas()[cenario.getFlechasAtiradas()] = new Flecha(new Point(cenario.getArqueiro().getPosicao().x + cenario.getArqueiro().getLargura(), cenario.getArqueiro().getPosicao().y));
@@ -122,10 +122,10 @@ public class JogoArcoFlecha extends Applet implements MouseMotionListener, Mouse
 	public void mouseReleased(MouseEvent e) {
 		
 		int velocidadeTemp = (int)(System.currentTimeMillis() - tempo)/10;
-		if(velocidadeTemp<ConfiguracaoThread.velocidadeMaxFlecha)
+		if(velocidadeTemp<Configuracao.velocidadeMaxFlecha)
 			velocidade = velocidadeTemp + velocidade;
 		else
-			velocidade = ConfiguracaoThread.velocidadeMaxFlecha;
+			velocidade = Configuracao.velocidadeMaxFlecha;
 	}
 
 	// Ao entrar
