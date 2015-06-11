@@ -13,6 +13,7 @@ import threads.ThreadVerificarBalao;
 import classes.Cenario;
 import classes.Desenho;
 import classes.Flecha;
+import fisica.Gravidade;
 
 public class JogoArcoFlecha extends Applet {
 
@@ -30,6 +31,8 @@ public class JogoArcoFlecha extends Applet {
 	private Cenario cenario;
 	private Desenho desenhar;
 	
+	private Gravidade gravidade;
+	
 	public void init() {
 		novoJogo();
 		resize(cenario.getWidth(), cenario.getHeigth());
@@ -38,7 +41,7 @@ public class JogoArcoFlecha extends Applet {
 	public void novoJogo(){
 		desenhar = new Desenho();
 		cenario = new Cenario();
-
+		gravidade = new Gravidade();
 		// Iniciar Threads
 		threadGeral.start();
 		threadMoverBalao.start();
@@ -64,7 +67,11 @@ public class JogoArcoFlecha extends Applet {
 	
 		// Evento ao clicar
 		if (cenario.getFlechasAtiradas() < cenario.getQtdFlecha()) {
-			cenario.getFlechas()[cenario.getFlechasAtiradas()] = new Flecha(new Point(cenario.getArqueiro().getPosicao().x + cenario.getArqueiro().getLargura(), cenario.getArqueiro().getPosicao().y));
+			Flecha f = new Flecha(new Point(cenario.getArqueiro().getPosicao().x + cenario.getArqueiro().getLargura(), cenario.getArqueiro().getPosicao().y));
+			f.setCaminho(gravidade.getCaminhoFlecha(f));
+			gravidade = new Gravidade();
+			//cenario.getFlechas()[cenario.getFlechasAtiradas()] = new Flecha(new Point(cenario.getArqueiro().getPosicao().x + cenario.getArqueiro().getLargura(), cenario.getArqueiro().getPosicao().y));
+			cenario.getFlechas()[cenario.getFlechasAtiradas()] = f;
 			cenario.setFlechasAtiradas(cenario.getFlechasAtiradas()+1);
 		}
 		return true;

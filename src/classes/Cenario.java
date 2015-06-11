@@ -5,8 +5,8 @@ import java.util.Random;
 
 public class Cenario {
 	
-	private int width = 400;
-	private int heigth = 300;
+	public static int width = 400;
+	public static int heigth = 300;
 	
 	private Balao[] baloes;
 	private Balao[] baloesCaindo;

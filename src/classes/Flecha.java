@@ -8,10 +8,14 @@ public class Flecha {
 	private static int larguraFlecha = 10;
 	private static int alturaFlecha = 10;
 	private static int velocidadeFlecha = 5;
+	private Point[] caminho;
+	private int indice;
 	
 	
 	public Flecha(){
 		this.posicao = new Point();
+		caminho = new Point[Cenario.width];
+		indice = 0;
 	}
 	
 	public Flecha (Point p){
@@ -41,6 +45,21 @@ public class Flecha {
 	public static void setAlturaFlecha(int alturaFlecha) {
 		Flecha.alturaFlecha = alturaFlecha;
 	}
-	
+
+	public Point[] getCaminho() {
+		return caminho;
+	}
+
+	public void setCaminho(Point[] caminho) {
+		this.caminho = caminho;
+	}
+
+	public int getIndice() {
+		return indice;
+	}
+
+	public void setIndice(int indice) {
+		this.indice = indice;
+	}
 	
 }
