@@ -8,4 +8,7 @@ public class ConfiguracaoThread {
 	public static Long tempoThreadGeral = 1000L;
 	public static Long tempoThreadDesenho = 150L;
 	
+	public static int velocidadeMaxFlecha = 500;
+	public static int velocidadeIncialFlecha = 100;
+	
 }

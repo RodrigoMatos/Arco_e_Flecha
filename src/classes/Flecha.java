@@ -2,12 +2,14 @@ package classes;
 
 import java.awt.Point;
 
+import config.ConfiguracaoThread;
+
 public class Flecha {
 
 	private Point posicao;
 	private static int larguraFlecha = 10;
 	private static int alturaFlecha = 10;
-	private static int velocidadeFlecha = 5;
+	private int velocidadeFlecha;
 	private Point[] caminho;
 	private int indice;
 	
@@ -16,10 +18,12 @@ public class Flecha {
 		this.posicao = new Point();
 		caminho = new Point[Cenario.width];
 		indice = 0;
+		velocidadeFlecha = ConfiguracaoThread.velocidadeIncialFlecha;
 	}
 	
 	public Flecha (Point p){
 		this.posicao = p;
+		velocidadeFlecha = ConfiguracaoThread.velocidadeIncialFlecha;
 	}
 	
 	public Point getPosicao() {
@@ -34,7 +38,7 @@ public class Flecha {
 		return larguraFlecha;
 	}
 	
-	public static int getVelocidadeFlecha() {
+	public int getVelocidadeFlecha() {
 		return velocidadeFlecha;
 	}
 
@@ -60,6 +64,10 @@ public class Flecha {
 
 	public void setIndice(int indice) {
 		this.indice = indice;
+	}
+
+	public void setVelocidadeFlecha(int velocidadeFlecha) {
+		this.velocidadeFlecha = velocidadeFlecha;
 	}
 	
 }

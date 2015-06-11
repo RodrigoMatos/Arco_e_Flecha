@@ -35,7 +35,7 @@ public class ThreadVerificarBalao extends Thread {
 					if (jogo.getCenario().getBaloes()[j] != null) {
 						if (((jogo.getCenario().getFlechas()[i].getPosicao().x + Flecha.getLarguraFlecha() >= jogo.getCenario().getBaloes()[j].getPosicao().x) && (jogo.getCenario().getFlechas()[i].getPosicao().x + Flecha.getLarguraFlecha() <= jogo.getCenario().getBaloes()[j].getPosicao().x
 								+ Balao.getLargura()))
-								&& ((jogo.getCenario().getFlechas()[i].getPosicao().y >= jogo.getCenario().getBaloes()[j].getPosicao().y && jogo.getCenario().getFlechas()[i].getPosicao().y <= jogo.getCenario().getBaloes()[j].getPosicao().y + Balao.getAltura()) || (jogo.getCenario().getFlechas()[i].getPosicao().y + Flecha.getAlturaFlecha() >= jogo.getCenario().getBaloes()[j].getPosicao().y && jogo.getCenario().getFlechas()[i].getPosicao().y + Flecha.getAlturaFlecha() <= jogo.getCenario().getBaloes()[j].getPosicao().y + Balao.getAltura()))) {
+								&& ((jogo.getCenario().getFlechas()[i].getPosicao().y >= jogo.getCenario().getBaloes()[j].getPosicao().y && jogo.getCenario().getFlechas()[i].getPosicao().y <= jogo.getCenario().getBaloes()[j].getPosicao().y + Balao.getAltura()))) {
 							System.out.println("Acertou");
 							jogo.getCenario().getBaloesCaindo()[jogo.getCenario().getQtdBaloesCaindo()] = jogo.getCenario().getBaloes()[j];
 							jogo.getCenario().getBaloesBoom()[jogo.getCenario().getQtdBaloesCaindo()] = jogo.getCenario().getBaloes()[j];

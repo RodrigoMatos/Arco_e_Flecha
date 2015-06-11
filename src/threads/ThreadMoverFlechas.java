@@ -1,12 +1,8 @@
 package threads;
 
-import java.awt.Point;
-
-import config.ConfiguracaoThread;
-
-import classes.Flecha;
-
 import main.JogoArcoFlecha;
+import classes.Flecha;
+import config.ConfiguracaoThread;
 
 
 public class ThreadMoverFlechas extends Thread {
@@ -21,8 +17,7 @@ public class ThreadMoverFlechas extends Thread {
 	@Override
 	public void run() {
 		while(!jogo.isFim()){
-			//moveruFlechas();
-			moverUmaFlecha();
+			moverFlechas();
 			try {
 				Thread.sleep(ConfiguracaoThread.tempoThreadMoverFlecha);
 			} catch (InterruptedException e) {
@@ -31,7 +26,7 @@ public class ThreadMoverFlechas extends Thread {
 		}
 	}
 	
-	private void moverFlechas() {
+	/*private void moverFlechas() {
 
 		// Movimenta as flechas.
 		for (int i = 0; i < jogo.getCenario().getFlechasAtiradas(); i++) {
@@ -43,23 +38,20 @@ public class ThreadMoverFlechas extends Thread {
 				}
 			}
 		}
-	}
+	}*/
 	
 	
-	private void moverUmaFlecha() {
+	private void moverFlechas() {
 
 		// Movimenta as flechas.
 		for (int i = 0; i < jogo.getCenario().getFlechasAtiradas(); i++) {
 			if (jogo.getCenario().getFlechas()[i] != null) {
-				//if (jogo.getCenario().getFlechas()[i].getPosicao().x < jogo.getCenario().getWidth()) {
+				if (jogo.getCenario().getFlechas()[i].getPosicao().x < jogo.getCenario().getWidth() && jogo.getCenario().getFlechas()[i].getPosicao().y < jogo.getCenario().getHeigth()) {
 				Flecha f = jogo.getCenario().getFlechas()[i];
 					f.setPosicao(f.getCaminho()[f.getIndice()]);
 					f.setIndice(f.getIndice()+1);
 					jogo.getCenario().getFlechas()[i] = f;
-					//jogo.getCenario().getFlechas()[i] = new Flecha(new Point(jogo.getCenario().getFlechas()[i].getPosicao().x + Flecha.getVelocidadeFlecha(), jogo.getCenario().getFlechas()[i].getPosicao().y));
-				//} else {
-				//	jogo.getCenario().getFlechas()[i] = null;
-				//}
+				}
 			}
 		}
 	}
