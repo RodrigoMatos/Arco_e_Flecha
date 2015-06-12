@@ -59,7 +59,7 @@ public class ThreadMoverBalao extends Thread {
 				if(moverDireita && jogo.getCenario().getBaloes()[i].getPosicao().x < jogo.getWidth() - Balao.getLargura()){
 					// Faz o balão ir para a direita
 					jogo.getCenario().getBaloes()[i] = new Balao(new Point(jogo.getCenario().getBaloes()[i].getPosicao().x + Balao.getVelocidadeSubindo() - 1, jogo.getCenario().getBaloes()[i].getPosicao().y));
-				} else if(jogo.getCenario().getBaloes()[i].getPosicao().x > jogo.getCenario().getAreaInicialBalao()) {
+				} else if(jogo.getCenario().getBaloes()[i].getPosicao().x > Configuracao.limiteXBalao) {
 					// Faz o balão ir para esquerda
 					jogo.getCenario().getBaloes()[i] = new Balao(new Point(jogo.getCenario().getBaloes()[i].getPosicao().x - Balao.getVelocidadeSubindo() - 1, jogo.getCenario().getBaloes()[i].getPosicao().y));
 				}

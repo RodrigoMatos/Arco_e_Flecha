@@ -18,12 +18,12 @@ public class Flecha {
 		this.posicao = new Point();
 		caminho = new Point[Configuracao.larguraCenario];
 		indice = 0;
-		velocidadeFlecha = Configuracao.velocidadeIncialFlecha;
+		velocidadeFlecha = Configuracao.velocidadeMinimaFlecha;
 	}
 	
 	public Flecha (Point p){
 		this.posicao = p;
-		velocidadeFlecha = Configuracao.velocidadeIncialFlecha;
+		velocidadeFlecha = Configuracao.velocidadeMinimaFlecha;
 	}
 	
 	public Point getPosicao() {

@@ -10,19 +10,14 @@ public class Cenario {
 	private Balao[] baloes;
 	private Balao[] baloesCaindo;
 	private Balao[] baloesBoom;
-	private int qtdBaloes = 10;
+	private int qtdBaloes = Configuracao.qtdBalao;
 	private int qtdBaloesCaindo = 0;
-	private int areaInicialBalao = 160;// Posição X que os balões não irão ultrapassar na tela
 	private Long[] tempoFinalGif;
-	
-	// Posições iniciais de objetos
-	private int posXPontos = 0;
-	private int posXSeta = 0;
 	
 	Arqueiro arqueiro;
 	
 	private Flecha[] flechas;
-	private int qtdFlecha = 10;
+	private int qtdFlecha = Configuracao.qtdFlehas;
 	private int flechasAtiradas = 0;
 	
 	private int pontos = 0;
@@ -35,22 +30,6 @@ public class Cenario {
 		baloesBoom = new Balao[qtdBaloes];
 		arqueiro = new Arqueiro();
 		criarBaloes();
-	}
-
-	public int getPosXPontos() {
-		return posXPontos;
-	}
-
-	public void setPosXPontos(int posXPontos) {
-		this.posXPontos = posXPontos;
-	}
-
-	public int getPosXSeta() {
-		return posXSeta;
-	}
-
-	public void setPosXSeta(int posXSeta) {
-		this.posXSeta = posXSeta;
 	}
 
 	public Balao[] getBaloes() {
@@ -93,14 +72,6 @@ public class Cenario {
 		this.qtdBaloesCaindo = qtdBaloesCaindo;
 	}
 
-	public int getAreaInicialBalao() {
-		return areaInicialBalao;
-	}
-
-	public void setAreaInicialBalao(int areaInicialBalao) {
-		this.areaInicialBalao = areaInicialBalao;
-	}
-	
 	public Arqueiro getArqueiro() {
 		return arqueiro;
 	}
@@ -163,7 +134,7 @@ public class Cenario {
 			y = num.nextInt(Configuracao.alturaCenario);
 
 			// Diminuir a probabilidade de que um balão fique em cima de outro:
-			if (x > getAreaInicialBalao() && x < Configuracao.larguraCenario - Balao.getLargura()) {
+			if (x > Configuracao.limiteXBalao && x < Configuracao.larguraCenario - Balao.getLargura()) {
 				if (criados == 0) {
 					getBaloes()[criados] = new Balao(new Point(x, y));
 					criados++;

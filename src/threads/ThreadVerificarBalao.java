@@ -41,7 +41,7 @@ public class ThreadVerificarBalao extends Thread {
 							jogo.getCenario().getBaloesBoom()[jogo.getCenario().getQtdBaloesCaindo()] = jogo.getCenario().getBaloes()[j];
 							jogo.getCenario().getTempoFinalGif()[jogo.getCenario().getQtdBaloesCaindo()] = System.currentTimeMillis() + Balao.getTempoGif();
 							jogo.getCenario().getBaloes()[j] = null;
-							jogo.getCenario().setPontos(jogo.getCenario().getPontos()+1);
+							jogo.getCenario().setPontos(jogo.getCenario().getPontos()+Configuracao.pontosPorBalao);
 							jogo.getCenario().setQtdBaloesCaindo(jogo.getCenario().getQtdBaloesCaindo()+1);
 						}
 					}

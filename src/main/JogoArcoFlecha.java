@@ -36,7 +36,7 @@ public class JogoArcoFlecha extends Applet implements MouseMotionListener, Mouse
 	private Gravidade gravidade;
 
 	private Long tempo;
-	private int velocidade = Configuracao.velocidadeIncialFlecha;
+	private int velocidade = Configuracao.velocidadeMinimaFlecha;
 	
 	public void init() {
 		addMouseMotionListener(this);
@@ -101,7 +101,7 @@ public class JogoArcoFlecha extends Applet implements MouseMotionListener, Mouse
 		if (cenario.getFlechasAtiradas() < cenario.getQtdFlecha()) {
 			Flecha f = new Flecha(new Point(cenario.getArqueiro().getPosicao().x + cenario.getArqueiro().getLargura(), cenario.getArqueiro().getPosicao().y));
 			f.setVelocidadeFlecha(velocidade);
-			velocidade = Configuracao.velocidadeIncialFlecha;
+			velocidade = Configuracao.velocidadeMinimaFlecha;
 			f.setCaminho(gravidade.getCaminhoFlecha(f));
 			gravidade = new Gravidade();
 			//cenario.getFlechas()[cenario.getFlechasAtiradas()] = new Flecha(new Point(cenario.getArqueiro().getPosicao().x + cenario.getArqueiro().getLargura(), cenario.getArqueiro().getPosicao().y));
@@ -152,7 +152,7 @@ public class JogoArcoFlecha extends Applet implements MouseMotionListener, Mouse
 	// Ao mover
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		cenario.getArqueiro().setPosicao(new Point(cenario.getPosXSeta(), e.getY()));
+		cenario.getArqueiro().setPosicao(new Point(Configuracao.limitXArqueiro, e.getY()));
 	}
 	
 }

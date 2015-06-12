@@ -55,12 +55,7 @@ public class Desenho {
 		// Desenha flechas.
 		for (int i = 0; i < cenario.getFlechasAtiradas(); i++) {
 			if (cenario.getFlechas()[i] != null) {
-				/*int x = cenario.getFlechas()[i].getCaminho()[cenario.getFlechas()[i].getIndice()].x;
-				int y = cenario.getFlechas()[i].getCaminho()[cenario.getFlechas()[i].getIndice()].y;
-				g.drawLine(x, y, x + Flecha.getLarguraFlecha(), y);
-				g.drawLine(x + Flecha.getLarguraFlecha() - 3, y - 3, x + Flecha.getLarguraFlecha(), y);
-				g.drawLine(x + Flecha.getLarguraFlecha() - 3, y + 3, x + Flecha.getLarguraFlecha(), y);*/
-			
+				// Falta implementar uma imagem.
 				g.drawLine(cenario.getFlechas()[i].getPosicao().x, cenario.getFlechas()[i].getPosicao().y, cenario.getFlechas()[i].getPosicao().x + Flecha.getLarguraFlecha(), cenario.getFlechas()[i].getPosicao().y);
 				/*	
 			 	g.drawLine(cenario.getFlechas()[i].getPosicao().x + Flecha.getLarguraFlecha() - 3, cenario.getFlechas()[i].getPosicao().y - 3, cenario.getFlechas()[i].getPosicao().x + Flecha.getLarguraFlecha(), cenario.getFlechas()[i].getPosicao().y);
@@ -73,7 +68,7 @@ public class Desenho {
 	public void mostrarPontos(Graphics g, Cenario cenario, ImageObserver imgObs) {
 		
 		// Exibir pontuação atual do jogador
-		g.drawString("Pontos: " + cenario.getPontos(), cenario.getPosXPontos(), Configuracao.alturaCenario);
+		g.drawString("Pontos: " + cenario.getPontos(), Configuracao.posXPontuacao, Configuracao.posYPontuacao);
 	}
 	
 }

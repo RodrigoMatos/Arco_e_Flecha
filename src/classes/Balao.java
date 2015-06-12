@@ -12,7 +12,9 @@ public class Balao {
 	private static int largura = 20;
 	private static int velocidadeSubindo = 3;
 	private static int velocidadeDescendo = 5;
+	
 	private static Long tempoGif = 600L;
+	
 	private Image imgBalao = null;
 	private Image ImgBalaoFurado = null;
 	private Image ImgBalaoBoom = null;
