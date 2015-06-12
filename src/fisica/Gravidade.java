@@ -22,8 +22,8 @@ public class Gravidade {
 	
 	public Gravidade(){
 		limpar();
-		gravidade = 9;
-		angulo = 20;
+		gravidade = Configuracao.gravidade;
+		angulo = Configuracao.anguloInicialTiro;
 	}
 	
 	private void limpar(){

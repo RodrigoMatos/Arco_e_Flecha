@@ -29,4 +29,8 @@ public class Configuracao {
 	
 	public static int limitXArqueiro = 0;// area X que o arqueiro não irá ultrapassar (seguindo o mouse)
 	
+	
+	public static int gravidade = 9;
+	public static int anguloInicialTiro = 20;
+	
 }
